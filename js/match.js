@@ -13,19 +13,24 @@
     return LMTI.labs.filter(function (l) { return l.status === "active" && l.axes; });
   }
 
-  // ---- 답 ↔ 결과 코드 (12개 답 → 3글자) ----
+  // ---- 답 ↔ 결과 코드 (20개 답 → 4글자, 36진수) ----
   // answers[i] = i번째 문항에서 고른 쪽 (0 = 왼쪽 성향, 1 = 오른쪽 성향)
+  // 글자 수는 문항 수에서 정해진다 (12문항 3글자 → 20문항 4글자). 문항 수가 바뀌면 예전 결과 링크는 열리지 않는다.
+  function codeLength() {
+    return (Math.pow(2, LMTI.questions.length) - 1).toString(36).length;
+  }
+
   function encode(answers) {
     var n = 0;
     for (var i = 0; i < answers.length; i++) if (answers[i] === 1) n += Math.pow(2, i);
     var s = n.toString(36);
-    while (s.length < 3) s = "0" + s;
+    while (s.length < codeLength()) s = "0" + s;
     return s;
   }
 
   function decode(code) {
     var total = LMTI.questions.length;
-    if (typeof code !== "string" || !/^[0-9a-z]{1,3}$/.test(code)) return null;
+    if (typeof code !== "string" || code.length !== codeLength() || !/^[0-9a-z]+$/.test(code)) return null;
     var n = parseInt(code, 36);
     if (isNaN(n) || n >= Math.pow(2, total)) return null;
     var answers = [];
@@ -33,7 +38,7 @@
     return answers;
   }
 
-  // ---- 내 점수: 축마다 오른쪽을 고른 개수(0~3) → 1 ~ 5점 ----
+  // ---- 내 점수: 축마다 오른쪽을 고른 개수(0~5) → 1 ~ 5점 ----
   function userScores(answers) {
     var right = [0, 0, 0, 0], total = [0, 0, 0, 0];
     LMTI.questions.forEach(function (q, i) {

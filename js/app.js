@@ -1,4 +1,4 @@
-/* 시작 화면 + 12문항 진행 → 결과 페이지로 이동 */
+/* 시작 화면 + 20문항 진행 → 결과 페이지로 이동 */
 (function () {
   var LMTI = window.LMTI;
   var Q = LMTI.questions;

@@ -1,5 +1,5 @@
 /*
- * 결과 페이지: 주소의 ?r=코드 → 12개 답 복원 → 다시 계산 → 화면
+ * 결과 페이지: 주소의 ?r=코드 → 20개 답 복원 → 다시 계산 → 화면
  * 순서: 1) 나의 연애 성향  →  [버튼]  →  2) 반전: 사실은 연구실 궁합 테스트 → 추천 3곳 · 가까움 척도 · 참여 연구실
  */
 (function () {
@@ -14,26 +14,28 @@
     return;
   }
 
-  // ---- 1. 나의 연애 성향 (축마다 오른쪽을 고른 개수 0~3) ----
-  var right = [0, 0, 0, 0];
-  LMTI.questions.forEach(function (q, i) { if (answers[i] === 1) right[q.axis] += 1; });
+  // ---- 1. 나의 연애 성향 (축마다 오른쪽을 고른 개수 0~5) ----
+  // 축마다 문항 수가 홀수(5)라서 어느 한쪽이 반드시 더 많다
+  var right = [0, 0, 0, 0], per = [0, 0, 0, 0];
+  LMTI.questions.forEach(function (q, i) { per[q.axis] += 1; if (answers[i] === 1) right[q.axis] += 1; });
+  var isRight = function (k) { return right[k] * 2 > per[k]; };
 
   $("loveScales").innerHTML = LMTI.loveAxes.map(function (ax, k) {
     var n = right[k];
-    var leftOn = n <= 1;
+    var leftOn = !isRight(k);
     return '<div class="love-row">' +
       '<div class="love-labels">' +
       '<span class="' + (leftOn ? "on" : "") + '">' + ax.leftEmoji + " " + ui.esc(ax.left) + "</span>" +
       '<span class="' + (leftOn ? "" : "on") + '">' + ui.esc(ax.right) + " " + ax.rightEmoji + "</span>" +
       "</div>" +
       '<div class="love-track" role="img" aria-label="' + ui.esc(leftOn ? ax.left : ax.right) + ' 쪽">' +
-      '<span class="love-dot" style="left:' + (8 + n * 28) + '%">💗</span></div>' +
+      '<span class="love-dot" style="left:' + (8 + (84 * n) / per[k]).toFixed(1) + '%">💗</span></div>' +
       "</div>";
   }).join("");
 
   // ---- 2. 반전 ----
   $("mapList").innerHTML = LMTI.loveAxes.map(function (ax, k) {
-    var pole = right[k] >= 2 ? 1 : 0;
+    var pole = isRight(k) ? 1 : 0;
     var love = pole ? ax.rightEmoji + " " + ax.right : ax.leftEmoji + " " + ax.left;
     var lab = pole ? LMTI.axes[k].right : LMTI.axes[k].left;
     return "<li><span>" + ui.esc(love) + "</span><i>→</i><span>" + ui.esc(lab) + "</span></li>";
@@ -106,7 +108,7 @@
   }
   var testUrl = new URL("./", location.href).href;
   $("shareBtn").addEventListener("click", function () {
-    var text = "정답 없는 연애 밸런스 게임 12문항! 나는 어떤 연인일까? 결과에 반전이 있어 🤫";
+    var text = "정답 없는 연애 밸런스 게임 20문항! 나는 어떤 연인일까? 결과에 반전이 있어 🤫";
     if (navigator.share) {
       navigator.share({ title: "LMTI 연애 성향 테스트", text: text, url: testUrl }).catch(function () {});
     } else {
