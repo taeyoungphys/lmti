@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LMTI · 참여 연구실</title>
+  <meta name="description" content="LMTI에 참여한 반도체물리학부 연구실을 소개해요.">
+  <meta name="theme-color" content="#fff7f4">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LMTI · 참여 연구실">
+  <meta property="og:description" content="반도체물리학부 학술제 LMTI에 참여한 연구실 소개">
+  <meta property="og:image" content="https://taeyoungphys.github.io/lmti/img/og-image.png">
+  <meta property="og:url" content="https://taeyoungphys.github.io/lmti/labs.html">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html"><img src="img/favicon.svg" alt="" width="28" height="28">LMTI</a>
+      <a class="link" href="index.html">테스트 하기</a>
+    </header>
+
+    <p class="eyebrow">반도체물리학부 학술제</p>
+    <h1>참여 연구실</h1>
+    <p class="lead">지금 학생을 모집하고 있는 연구실들이에요. "자세히 보기"를 누르면 연구실 소개를 더 볼 수 있어요.</p>
+
+    <div id="labList"></div>
+
+    <a class="btn primary" href="index.html" style="margin-top:24px">나와 가까운 연구실 찾기</a>
+    <p class="note">학생을 모집하지 않는 연구실은 이번 테스트에서 제외했어요.</p>
+  </main>
+
+  <script src="data/labs.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    (function () {
+      var ui = LMTI.ui;
+      var html = LMTI.labs.filter(function (l) { return l.status !== "excluded"; }).map(ui.labCard).join("");
+      document.getElementById("labList").innerHTML = html;
+    })();
+  </script>
+</body>
+</html>

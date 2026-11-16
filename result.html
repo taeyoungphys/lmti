@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LMTI 결과 · 나의 연애 성향</title>
+  <meta name="description" content="연애 밸런스 게임으로 알아본 나의 연애 성향. 그런데 결과에 반전이 있어요.">
+  <meta name="theme-color" content="#ffe3ea">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LMTI 결과 · 나의 연애 성향">
+  <meta property="og:description" content="정답 없는 연애 밸런스 게임 결과… 그런데 반전이 있다? 🤫">
+  <meta property="og:image" content="https://taeyoungphys.github.io/lmti/img/og-image.png">
+  <meta property="og:url" content="https://taeyoungphys.github.io/lmti/result.html">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="love-bg">
+  <main class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html"><img src="img/favicon.svg" alt="" width="28" height="28">LMTI</a>
+    </header>
+
+    <div id="result" hidden>
+
+      <!-- 1. 나의 연애 성향 (반전 전) -->
+      <section id="love" aria-labelledby="loveTitle">
+        <p class="eyebrow">💘 LMTI 결과</p>
+        <h1 id="loveTitle">나의 연애 성향</h1>
+        <p class="lead">12번의 선택으로 알아본 연애 스타일이에요. 하트가 기운 쪽이 나와 더 가까운 모습이에요.</p>
+        <div class="love-card" id="loveScales"></div>
+        <button class="btn reveal-btn" id="revealBtn" type="button" aria-expanded="false" aria-controls="reveal">그런데… 사실 이 테스트는 🤫</button>
+        <p class="reveal-hint" id="revealHint">눌러서 반전 결과를 확인해 보세요</p>
+      </section>
+
+      <!-- 2. 반전: 연구실 궁합 -->
+      <section id="reveal" hidden>
+        <div class="twist-card">
+          <p class="twist-emoji" aria-hidden="true">💘 → 🔬</p>
+          <h2>LMTI의 L은 <s>Love</s>가 아니라<br><em>Lab</em>이었어요!</h2>
+          <p>연애 스타일 속에는 연구하는 스타일도 숨어 있어요. 반도체물리학부 연구실들이 직접 답한 설문과 비교해서, 나와 어울리는 연구실을 찾아봤어요.</p>
+          <ul class="map-list" id="mapList" aria-label="나의 연애 성향과 연구 성향"></ul>
+        </div>
+
+        <h2>나와 어울리는 연구실</h2>
+        <p class="sub">연애 성향을 연구실들의 설문과 비교한 결과예요.</p>
+        <div id="picks"></div>
+
+        <section class="section" aria-labelledby="scaleTitle">
+          <h2 id="scaleTitle">연구실별 가까움</h2>
+          <p class="sub">점수가 높을수록 나와 연구실의 성향이 가까워요.</p>
+          <div class="card-plain">
+            <ol class="scale-list" id="scaleList"></ol>
+          </div>
+          <p class="note" id="emptyNote"></p>
+        </section>
+
+        <section class="section" aria-labelledby="allTitle">
+          <h2 id="allTitle">참여 연구실</h2>
+          <p class="sub">LMTI에 함께한 연구실이에요. "자세히 보기"를 누르면 소개를 더 볼 수 있어요.</p>
+          <div id="labList"></div>
+          <p class="note">학생을 모집하지 않는 연구실은 이번 테스트에서 제외했어요.</p>
+        </section>
+
+        <section class="section howto">
+          <div class="card-plain">
+            <details>
+              <summary>가까움은 어떻게 계산하나요?</summary>
+              <ol>
+                <li>연구실들은 설문에서 네 가지 성향을 1~5점으로 답했어요: 이론↔실험, 개인↔협업, 계획↔유연, 기초 원리↔응용 기술.</li>
+                <li>12문항은 이 네 가지를 연애 상황으로 바꿔 세 번씩 물었어요.</li>
+                <li>각 연구실이 다른 연구실들에 비해 두드러지는 방향과, 내 답변이 기울어진 방향이 얼마나 같은지를 점수로 나타냈어요.</li>
+              </ol>
+              <p>재미로 보는 테스트예요. 관심 가는 연구실이 있다면 직접 찾아가 이야기를 나눠 보세요.</p>
+            </details>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button class="btn primary" id="shareBtn" type="button">친구에게 테스트 공유하기 💌</button>
+          <button class="btn ghost" id="copyBtn" type="button">내 결과 링크 복사하기</button>
+          <a class="btn ghost" href="index.html?restart=1">다시 하기</a>
+        </div>
+      </section>
+    </div>
+
+    <section id="notFound" hidden>
+      <p class="eyebrow">LMTI</p>
+      <h1>결과를 찾을 수 없어요</h1>
+      <p class="lead">링크가 잘못되었거나 일부가 잘린 것 같아요. 테스트를 다시 해 주세요.</p>
+      <a class="btn primary" href="index.html?restart=1">테스트 하러 가기</a>
+    </section>
+  </main>
+
+  <script src="data/labs.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="data/comments.js"></script>
+  <script src="js/match.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/result.js"></script>
+</body>
+</html>

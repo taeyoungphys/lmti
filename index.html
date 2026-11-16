@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LMTI · 연애 밸런스 게임으로 알아보는 나의 연애 성향</title>
+  <meta name="description" content="썸부터 기념일까지, 정답 없는 연애 밸런스 게임 12문항으로 알아보는 나의 연애 스타일. 결과에 반전이 있어요.">
+  <meta name="theme-color" content="#ffe3ea">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LMTI · 나는 어떤 연인일까?">
+  <meta property="og:description" content="정답 없는 연애 밸런스 게임 12문항 · 약 2분 · 결과에 반전 있음 🤫">
+  <meta property="og:image" content="https://taeyoungphys.github.io/lmti/img/og-image.png">
+  <meta property="og:url" content="https://taeyoungphys.github.io/lmti/">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="love-bg">
+  <main class="app">
+
+    <!-- ① 시작: 연구실 이야기는 하지 않는다 (반전은 결과지에서) -->
+    <section id="start" aria-labelledby="startTitle">
+      <div class="hero">
+        <span class="float-heart fh1" aria-hidden="true">💗</span>
+        <span class="float-heart fh2" aria-hidden="true">💕</span>
+        <span class="float-heart fh3" aria-hidden="true">💘</span>
+        <span class="float-heart fh4" aria-hidden="true">💞</span>
+        <div class="hero-icon" aria-hidden="true">💌</div>
+        <p class="hero-badge">LMTI · 연애 성향 테스트</p>
+        <h1 id="startTitle">썸부터 기념일까지,<br><em>나는 어떤 연인일까?</em></h1>
+        <p class="hero-lead">정답 없는 연애 밸런스 게임 12문항으로<br>나의 연애 스타일을 알아봐요.</p>
+      </div>
+
+      <ul class="meta">
+        <li>💬 12문항</li>
+        <li>⏱ 약 2분</li>
+        <li>🤫 결과에 반전 있음</li>
+      </ul>
+
+      <div class="sample" aria-label="문항 미리보기">
+        <p class="sample-label">미리보기</p>
+        <p class="sample-q" id="sampleQ"></p>
+        <div class="sample-ops">
+          <span id="sampleA"></span>
+          <b aria-hidden="true">VS</b>
+          <span id="sampleB"></span>
+        </div>
+      </div>
+
+      <button class="btn primary btn-love" id="startBtn" type="button">테스트 시작하기 💘</button>
+      <p class="resume" id="resume" hidden>
+        <span id="resumeText"></span>
+        <button type="button" id="restartBtn">처음부터 하기</button>
+      </p>
+      <p class="note">응답은 어디에도 저장되지 않아요.</p>
+    </section>
+
+    <!-- ② 문항 -->
+    <section id="quiz" hidden aria-live="polite">
+      <header class="quiz-top">
+        <button class="icon-btn" id="backBtn" type="button" aria-label="이전으로">←</button>
+        <div class="progress">
+          <div class="progress-bar" aria-hidden="true"><span id="progressFill"></span></div>
+          <span class="progress-text" id="progressText">1 / 12</span>
+        </div>
+      </header>
+
+      <div id="qBody">
+        <div class="q-card">
+          <div class="q-emoji" id="qEmoji" aria-hidden="true"></div>
+          <p class="q-num" id="qNum">Q1</p>
+          <h2 class="q-text" id="qText"></h2>
+        </div>
+        <div class="choices">
+          <button class="choice" type="button" data-idx="0"><span class="choice-tag">A</span><span class="choice-text"></span></button>
+          <div class="vs" aria-hidden="true">VS</div>
+          <button class="choice" type="button" data-idx="1"><span class="choice-tag">B</span><span class="choice-text"></span></button>
+        </div>
+      </div>
+      <p class="hint">정답은 없어요. 조금이라도 더 끌리는 쪽을 골라 주세요.</p>
+    </section>
+
+  </main>
+
+  <script src="data/labs.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="data/comments.js"></script>
+  <script src="js/match.js"></script>
+  <script src="js/collect.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
