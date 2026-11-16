@@ -99,18 +99,40 @@
   if (location.hash === "#lab") reveal(false);
 
   // ---- 공유: 친구에게는 반전이 들키지 않게 테스트 첫 화면을 보낸다 ----
+  // 카카오톡 · 인스타 같은 앱 안 브라우저는 공유 창(navigator.share)이나 클립보드 API가 없거나 막혀 있을 때가 많다.
+  // 그래서 공유 창 → 클립보드 API → 예전 방식 복사(execCommand) → 직접 복사 안내 순서로 시도한다.
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.top = "-1000px"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
   function copy(text, done) {
+    var fallback = function () {
+      if (legacyCopy(text)) ui.toast(done);
+      else window.prompt("아래 링크를 길게 눌러 복사해 주세요", text);
+    };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { ui.toast(done); }, function () { window.prompt("아래 링크를 복사해 주세요", text); });
+      navigator.clipboard.writeText(text).then(function () { ui.toast(done); }, fallback);
     } else {
-      window.prompt("아래 링크를 복사해 주세요", text);
+      fallback();
     }
   }
   var testUrl = new URL("./", location.href).href;
   $("shareBtn").addEventListener("click", function () {
     var text = "정답 없는 연애 밸런스 게임 20문항! 나는 어떤 연인일까? 결과에 반전이 있어 🤫";
     if (navigator.share) {
-      navigator.share({ title: "LMTI 연애 성향 테스트", text: text, url: testUrl }).catch(function () {});
+      navigator.share({ title: "LMTI 연애 성향 테스트", text: text, url: testUrl }).catch(function (e) {
+        // 사용자가 공유 창을 닫은 경우(AbortError)만 그대로 두고, 공유가 막힌 경우에는 링크를 복사한다
+        if (!e || e.name !== "AbortError") copy(testUrl, "테스트 링크를 복사했어요");
+      });
     } else {
       copy(testUrl, "테스트 링크를 복사했어요");
     }
