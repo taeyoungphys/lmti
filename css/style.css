@@ -311,3 +311,13 @@ body.love-bg { background: linear-gradient(180deg, #ffe3ea 0%, #fff4ef 45%, var(
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- 맨 아래: 양자 타로 바로가기 ---------- */
+.tarot-link { margin-top: 40px; padding-top: 24px; border-top: 1px dashed #e8d6d0; text-align: center; }
+.tarot-link p { margin: 0 0 10px; font-size: 14px; color: var(--ink-3); }
+.btn.tarot {
+  background: linear-gradient(160deg, #33285e, #1b1638);
+  color: #e8c66a; border: 1.5px solid #e8c66a;
+  box-shadow: 0 8px 20px rgba(27, 22, 56, 0.25);
+}
+.btn.tarot:hover { background: linear-gradient(160deg, #3d3170, #221c45); }
