@@ -73,6 +73,7 @@
   $("emptyNote").textContent = empty.length
     ? empty.join(" · ") + "은 소개를 준비하고 있어요. 준비되면 함께 비교해 드릴게요."
     : "";
+  $("emptyNote").hidden = !empty.length; // 비워 둔 연구실이 없으면 빈 줄 여백도 없앤다
 
   $("labList").innerHTML = LMTI.labs.filter(function (l) { return l.status !== "excluded"; }).map(ui.labCard).join("");
 
